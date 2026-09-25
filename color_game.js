@@ -45,7 +45,7 @@ const cambiarColores = (color) => {
 const reset = () => {
     // 1. Generar nuevos colores según la cantidad activa
     colores = generarColoresAleatorios(numCuadrados);
-    
+
     // 2. Elegir un color ganador al azar de la lista
     colorGanador = colores[Math.floor(Math.random() * colores.length)];
     color_display.textContent = colorGanador;
@@ -57,11 +57,14 @@ const reset = () => {
 
     // 4. Pintar los cuadrados
     squares.forEach((square, index) => {
+        square.style.opacity = "1"; // Restaurar visibilidad
+        square.style.pointerEvents = "auto"; // Restaurar interacción
+
         if (colores[index]) {
-            square.style.display = "block"; // Asegurar que sea visible
+            square.style.display = "block";
             square.style.backgroundColor = colores[index];
         } else {
-            square.style.display = "none"; // Ocultar si está en modo 'fácil' (3 cuadrados)
+            square.style.display = "none";
         }
     });
 };
@@ -73,13 +76,15 @@ squares.forEach((square) => {
     square.addEventListener("click", function () {
         const colorClickeado = this.style.backgroundColor;
 
+
         if (colorClickeado === colorGanador) {
             mensaje_display.textContent = "¡Correcto!";
             reset_button.textContent = "Play Again?";
-            h1.style.backgroundColor = colorGanador; // Opcional: pinta el encabezado del color ganador
+            h1.style.backgroundColor = colorGanador;
             cambiarColores(colorGanador);
         } else {
-            this.style.backgroundColor = "#232323"; // Esconde el cuadrado equivocado (mismo color que el body)
+            this.style.opacity = "0";
+            this.style.pointerEvents = "none"; // Desactiva clics en el cuadrado fallido
             mensaje_display.textContent = "Inténtalo nuevamente";
         }
     });

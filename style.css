@@ -11,35 +11,40 @@ body {
   font-family: 'Press Start 2P', cursive, sans-serif;
   text-align: center;
   color: #ffffff;
+  min-height: 100vh;
 }
 
+/* ENCABEZADO */
 #h1 {
   background-color: #2c2c3e;
-  padding: 25px 10px;
+  padding: 20px 10px;
   margin: 0;
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 2.5vw, 1.1rem); /* Tamaño de texto fluido */
   line-height: 1.8;
   letter-spacing: 2px;
   text-transform: uppercase;
   border-bottom: 4px solid #4e4e6a;
+  transition: background-color 0.4s ease;
 }
 
 #colorDisplay {
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
   color: #00e5ff;
   text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
   display: inline-block;
-  margin: 10px 0;
+  margin: 8px 0;
+  word-break: break-all;
 }
 
+/* BARRA DE CONTROLES ADAPTABLE */
 #stripe {
   background-color: #111118;
-  height: auto;
-  padding: 10px;
+  padding: 12px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  flex-wrap: wrap; /* Permite que los botones bajen de línea si la pantalla es angosta */
+  gap: 10px;
   border-bottom: 4px solid #4e4e6a;
 }
 
@@ -49,7 +54,7 @@ button {
   border: 3px solid #000;
   font-family: 'Press Start 2P', cursive, sans-serif;
   font-size: 0.65rem;
-  padding: 10px 14px;
+  padding: 10px 12px;
   cursor: pointer;
   box-shadow: 0 4px 0 #000;
   transition: all 0.1s ease;
@@ -73,32 +78,73 @@ button:active {
 
 #message {
   display: inline-block;
-  min-width: 180px;
-  font-size: 0.7rem;
+  min-width: 150px;
+  font-size: 0.65rem;
   color: #ffe600;
 }
 
+/* GRILLA DE CUADRADOS (GRID / FLEX) */
 .container {
   max-width: 600px;
-  margin: 30px auto;
+  width: 90%;
+  margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 15px; /* Reemplaza los margins porcentuales para mayor control */
 }
 
 .square {
-  width: 28%;
+  width: calc(33.333% - 15px); /* 3 columnas en computadoras y tablets */
+  aspect-ratio: 1 / 1; /* Mantiene proporciones cuadradas perfectas sin usar padding-bottom */
   background-color: #fff;
-  padding-bottom: 28%;
-  float: left;
-  margin: 2.5%;
   border-radius: 12px;
   border: 4px solid #000;
   box-shadow: 0 6px 0 #000;
-  transition: transform 0.2s, background-color 0.4s;
+  transition: transform 0.2s, background-color 0.4s, opacity 0.3s;
   cursor: pointer;
 }
 
 .square:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+}
+
+
+/* --- MEDIA QUERIES PARA PANTALLAS CHICAS / MÓVILES --- */
+@media (max-width: 480px) {
+  /* Reducimos el tamaño de la fuente y rellenos del título */
+  #h1 {
+    font-size: 0.75rem; /* Título más pequeño */
+    padding: 12px 5px;
+    line-height: 1.5;
+  }
+
+  #colorDisplay {
+    font-size: 1rem; /* El código RGB más compacto */
+    margin: 4px 0;
+  }
+
+  #stripe {
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 0.55rem; /* Botones un poco más chicos */
+    padding: 8px 10px;
+  }
+
+  /* Reducimos el contenedor y el tamaño de los cuadrados */
+  .container {
+    max-width: 280px; /* Ancho máximo más ajustado para celulares */
+    margin: 15px auto;
+    gap: 8px; /* Menos espacio entre cuadrados */
+  }
+
+  .square {
+    width: calc(30% - 8px); /* Cuadrados más pequeños (se mantienen en 3 columnas) */
+    border-width: 2px; /* Borde más fino para que no ocupe tanto espacio */
+    box-shadow: 0 3px 0 #000;
+  }
 }
